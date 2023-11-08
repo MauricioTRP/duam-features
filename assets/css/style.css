@@ -13,6 +13,15 @@
 }
 
 .duam-feature-btn a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     color: #333333;
     text-decoration: none;
+}
+
+.duam-feature-btn a .logo-btn {
+    height: 1.3em;
+    width: auto;
+    padding-left: 0.8em;
 }
