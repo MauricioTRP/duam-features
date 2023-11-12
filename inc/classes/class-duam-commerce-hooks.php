@@ -27,10 +27,10 @@ class Duam_Commerce_Hooks {
      * and set the status of order to completed to trigger enrollment
      */
 
-    function change_order_state_if_coupon($order_id, $order) {
+    function change_order_state_if_coupon($order_id, $old_status) {
         $order = wc_get_order( $order_id );
         // Verificar si el total del pedido es igual a 0
-        if ( $order->get_total() == 0 ) {
+        if ( $order->get_total() == 0 && $old_status !== 'completed' ) {
             // Actualizar el estado del pedido a "Completado"
             $order->update_status('completed');
         }
