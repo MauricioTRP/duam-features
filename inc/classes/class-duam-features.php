@@ -10,9 +10,10 @@ use DUAM_FEATURES\Inc\Traits\Singleton;
 class DUAM_FEATURES {
     use Singleton;
 
-	public function __construct() {
+	protected function __construct() {
         // Load classes
         Assets::get_instance();
         Duam_Commerce_Hooks::get_instance();
+        Duam_Template_Elements::get_instance();
 	}
 }

@@ -1,0 +1,16 @@
+{
+  "name": "duam-features",
+  "version": "1.0.0",
+  "description": "js for duam-features plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack build --mode=production"
+  },
+  "author": "Mauro",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

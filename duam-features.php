@@ -21,7 +21,6 @@ if ( ! defined( 'DUAM_FEATURES_URI' ) ) {
 }
 
 require_once DUAM_FEATURES_DIR_PATH . 'inc/helpers/autoloader.php';
-require_once DUAM_FEATURES_DIR_PATH . 'inc/helpers/template-elements.php';
 
 function duam_get_plugin_instance() {
     \DUAM_FEATURES\Inc\DUAM_FEATURES::get_instance();

@@ -25,9 +25,12 @@ class Duam_Commerce_Hooks {
     /**
      * This functions checks if it has a 100% discount in one order
      * and set the status of order to completed to trigger enrollment
+     * 
+     * @params $string $order_id-> the ID of the current order ,  $old_status->the current status of the order
+     * @return void
      */
 
-    function change_order_state_if_coupon($order_id, $old_status) {
+    public function change_order_state_if_coupon( $order_id, $old_status ) {
         $order = wc_get_order( $order_id );
         // Verificar si el total del pedido es igual a 0
         if ( $order->get_total() == 0 && $old_status !== 'completed' ) {
