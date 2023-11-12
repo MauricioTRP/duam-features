@@ -20,7 +20,7 @@ class Duam_Template_Elements {
          * Actions for template elements on plugin
          */
         add_action( 'wp_footer', [ $this, 'duam_sticky_button' ] );
-        add_action( 'wp_footer', [ $this, 'duam_modal_form' ], 10 );
+        add_action( 'woocommerce_checkout_login_message', [ $this, 'duam_modal_form' ] );
     }
 
     /**
