@@ -13,5 +13,6 @@ class DUAM_FEATURES {
 	public function __construct() {
         // Load classes
         Assets::get_instance();
+        Duam_Commerce_Hooks::get_instance();
 	}
 }
