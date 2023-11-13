@@ -17,10 +17,17 @@ class Duam_Template_Elements {
 
     protected function setup_hooks() {
         /**
+         * Remove any default action
+         */
+        add_action( 'init', [ $this, 'duam_remove_default_checkout_button' ] );
+    
+
+        
+        /**
          * Actions for template elements on plugin
          */
         add_action( 'wp_footer', [ $this, 'duam_sticky_button' ] );
-        add_action( 'woocommerce_checkout_login_message', [ $this, 'duam_modal_form' ] );
+        add_action( 'woocommerce_proceed_to_checkout', [ $this, 'duam_custom_proceed_to_checkout' ] , 20 );
     }
 
     /**
@@ -46,9 +53,8 @@ class Duam_Template_Elements {
      * @return void
      */
     public function duam_modal_form() {
-        if ( ! is_user_logged_in()  && is_checkout() ) {
         echo '
-            <button id="openModalBtn">Abrir Modal</button>
+            <button id="openModalBtn" class="checkout-button button alt wc-forward' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '">Inicia Sesión para Seguir</button>
             
             <div id="myModal" class="modal">
               <div class="modal-content">
@@ -58,7 +64,25 @@ class Duam_Template_Elements {
               </div>
             </div>
         ';
+    }
+
+    /**
+     * Custom proceed to checkout button
+     * This template removes the default WC action and setup
+     * a custom button that can handles a modal form to login
+     * 
+     * @return void
+     */
+    public function duam_custom_proceed_to_checkout() {
+        if ( is_user_logged_in() ) {
+            wc_get_template( 'cart/proceed-to-checkout-button.php' );
+        } else {
+            $this->duam_modal_form();
         }
+    }
+
+    public function duam_remove_default_checkout_button() {
+        remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
     }
 }
 
