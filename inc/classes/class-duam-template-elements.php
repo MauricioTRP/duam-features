@@ -53,14 +53,23 @@ class Duam_Template_Elements {
      * @return void
      */
     public function duam_modal_form() {
+        $form = '
+            <div class="u-columns col2-set" id="customer_login">
+                <div class="u-column1">
+                    <h3>' . esc_html( 'Login', 'woocommerce' ) . '</h3>
+                </div>
+            </div>
+        ';
+
+        // Muestra el contenido dentro del modal junto con el formulario
         echo '
-            <button id="openModalBtn" class="checkout-button button alt wc-forward' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '">Inicia Sesión para Seguir</button>
+            <button id="openModalBtn" class="checkout-button button alt wc-forward' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '">Finalizar Matrícula</button>
             
             <div id="myModal" class="modal">
               <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>Modal Título</h2>
-                <p>Contenido del modal...</p>
+                <h2>Inicia Sesión o Registrate para Continuar</h2>
+                ' .   $form  . '
               </div>
             </div>
         ';
