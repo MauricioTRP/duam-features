@@ -54,27 +54,27 @@ class Duam_Template_Elements {
      */
     public function duam_modal_form() {
         $form = '
-            <form method="post" id="duam-login">
-                <p>
+            <form method="post" id="duam-login" class="duam-modal-form">
+                <div>
                     <label for="username">' . esc_html( 'Nombre de usuario o correo', 'woocommerce' ) .  '&nbsp;<span class="required">*</span></label>   
                     <input type="text" name="username" id="username" autocomplete="nombre de usuario" value"" />
-                </p> 
-                <p>
+                </div> 
+                <div>
                     <label for="password">' . esc_html( 'Password', 'woocommerce' ) .  '&nbsp;<span class="required">*</span></label>   
                     <input type="password" name="password" id="password" autocomplete="nombre de usuario" value"" />
-                </p> 
+                </div> 
 
-                <p>
+                <div>
                     <label>
                         <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span>' . esc_html( 'Remember me', 'woocommerce' ) . '</span>
                     </label>
                     ' . wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ) . '
-                    <button type="submit" class="button" name="login" value="'. esc_attr( 'Log in', 'woocommerce' ) . '">' . esc_html( 'Log in', 'woocommerce' ) . '</button>
-                </p>
+                    <button type="submit" class="button" name="duam-login" value="'. esc_attr( 'Log in', 'woocommerce' ) . '">' . esc_html( 'Log in', 'woocommerce' ) . '</button>
+                </div>
 
-                <p>
+                <div>
                     <a href=' . esc_url( wp_lostpassword_url() ) . '>' . esc_html( '¿Perdiste tu clave?' ) . '</a>
-                </p>
+                </div>
                 
             </form>
         ';
