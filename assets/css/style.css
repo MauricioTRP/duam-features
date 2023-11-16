@@ -44,6 +44,7 @@
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    height: auto;
   }
   
   .close {
@@ -58,4 +59,13 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .duam-modal-form {
+    padding: 1rem auto;
+  }
+
+  .duam-modal-form div {
+    display: flex;
+    flex-direction: column;
   }

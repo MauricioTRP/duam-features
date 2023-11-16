@@ -24,7 +24,7 @@ class Assets {
 
     public function register_scripts() {
         // Register Scripts
-        wp_register_script( 'duam-js', DUAM_FEATURES_URI . '/assets/js/main.js', ['jquery'], filemtime( plugin_dir_url( __FILE__ ) . '/assets/js/main.js' ) ,true );
+        wp_register_script( 'duam-js', DUAM_FEATURES_URI . '/assets/js/main.js', ['jquery'], filemtime( plugin_dir_url( __FILE__ ) . 'assets/js/main.js' ) ,true );
 
         // Enqueue Scripts
         wp_enqueue_script( 'duam-js' );

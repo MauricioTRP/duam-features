@@ -15,5 +15,6 @@ class DUAM_FEATURES {
         Assets::get_instance();
         Duam_Commerce_Hooks::get_instance();
         Duam_Template_Elements::get_instance();
+        // Duam_Admin_Menu::get_instance();
 	}
 }
