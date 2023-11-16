@@ -104,26 +104,3 @@ class Duam_Commerce_Hooks {
         }
     }
 }
-
-
-    
-    /**
-     * Provisory funcion to list active hooks available on site
-     * must uncomment on $this->setup_hooks()
-     * 
-     * @return void
-     */
-    public function listar_hooks_activos() {
-        global $wp_filter;
-        echo '<pre>';
-        foreach ($wp_filter as $tag => $hook) {
-            echo '<strong>' . $tag . '</strong>' . ': ';
-            foreach ($hook as $priority => $functions) {
-                echo $priority . ' ';
-            }
-            echo '<br>';
-        }
-        echo '</pre>';
-    }
-}
-
