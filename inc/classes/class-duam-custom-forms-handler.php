@@ -5,8 +5,14 @@
  * @package duam-features
  */
 namespace DUAM_FEATURES\Inc;
+use DUAM_FEATURES\Inc\Traits\Singleton;
+use \Exception;
+use \WP_Error;
 
-class Custom_Forms_Handler {
+
+class Duam_Custom_Forms_Handler {
+	use Singleton;
+
     protected function __construct() {
         $this->setup_hooks();
     }
@@ -137,10 +143,10 @@ class Custom_Forms_Handler {
 					} elseif ( wc_get_raw_referer() ) {
                         $redirect = wc_get_raw_referer();
 					} else {
-                        $redirect = wc_get_page_permalink( 'myaccount' );
+                        $redirect = wc_get_page_permalink( 'checkout' );
 					}
                     
-					wp_redirect( wp_validate_redirect( apply_filters( 'woocommerce_registration_redirect', $redirect ), wc_get_page_permalink( 'myaccount' ) ) ); //phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+					wp_redirect( wp_validate_redirect( apply_filters( 'woocommerce_registration_redirect', $redirect ), wc_get_page_permalink( 'checkout' ) ) ); //phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 					exit;
 				}
 			} catch ( Exception $e ) {

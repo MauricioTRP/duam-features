@@ -7,8 +7,6 @@
 
 namespace DUAM_FEATURES\Inc;
 use DUAM_FEATURES\Inc\Traits\Singleton;
-use \Exception;
-use \WP_Error;
 
 class Duam_Commerce_Hooks {
     use Singleton;
@@ -23,7 +21,7 @@ class Duam_Commerce_Hooks {
          */
         // add_action( 'wp_footer', [ $this, 'listar_hooks_activos'] );
         add_action('woocommerce_order_status_changed', [ $this, 'change_order_state_if_coupon' ], 10, 2);
-        add_action( 'init', [ $this, 'custom_login_redirect' ] );
+        // add_action( 'init', [ $this, 'custom_login_redirect' ] ); probando si la clase custom-forms-handlers hace el trabajo
     }
 
     /**

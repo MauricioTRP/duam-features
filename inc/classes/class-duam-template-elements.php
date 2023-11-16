@@ -81,8 +81,6 @@ class Duam_Template_Elements {
 
         // Muestra el contenido dentro del modal junto con el formulario
         echo '
-            <button id="openModalBtn">Abrir Modal</button>
-            
             <div id="myModal" class="modal">
               <div class="modal-content">
                 <span class="close">&times;</span>
