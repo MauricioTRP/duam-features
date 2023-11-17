@@ -37,10 +37,11 @@ class Duam_Template_Elements {
      */
     public function duam_sticky_button() {
         $image_url = DUAM_FEATURES_URI . '/assets/img/SENCE.png';
+        $outer_url = 'https://docs.google.com/spreadsheets/d/1AYYK2ByXs3YeajdI7BuE2-CF7btQTPhn/edit#gid=1690859871';
         
         echo '
         <div class="duam-feature-btn">
-            <a href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">
+            <a href="' . esc_url( $outer_url ) . '" target="_blank">
                 Catálogo   <img src=' . esc_attr( $image_url ) . '" alt="SENCE" class="logo-btn">
             </a>
         </div>
@@ -53,7 +54,8 @@ class Duam_Template_Elements {
      * @return void
      */
     public function duam_modal_form() {
-        $form = '
+        $form_login = '
+        <div class="content">
             <form method="post" id="duam-login" class="duam-modal-form">
                 <div>
                     <label for="username">' . esc_html( 'Nombre de usuario o correo', 'woocommerce' ) .  '&nbsp;<span class="required">*</span></label>   
@@ -65,7 +67,7 @@ class Duam_Template_Elements {
                 </div> 
 
                 <div>
-                    <label>
+                    <label for="rememberme">
                         <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span>' . esc_html( 'Remember me', 'woocommerce' ) . '</span>
                     </label>
                     ' . wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ) . '
@@ -77,7 +79,35 @@ class Duam_Template_Elements {
                 </div>
                 
             </form>
+        </div>
         ';
+
+        $form_register = '
+        <div class="content active">
+            <form method="post" id="duam-register" class="duam-modal-form">
+                <div>
+                    <label for="reg_username">
+                        ' . esc_html( 'Username', 'woocommerce' ) . '&nbsp;<span class="required">*</span>
+                    </label>
+                    <input type="text" name="username" id="reg_username" autocomplete="username" />
+                </div>
+                <div>
+                    <label for="reg_password">
+                        ' . esc_html( 'Password', 'woocommerce' ) . '&nbsp; <span class="required">*</span>
+                    </label>
+                    <input type="password" name="password" id="reg_password" autocomplete="new-password" />
+                </div>
+                <div>
+                    ' . wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ) . '
+                    <button class="button" type="submit" name="register" value="' . esc_attr( 'Register', 'woocommerce' ) . '">
+                        ' . esc_html( 'Register', 'woocommerce' ) . '
+                    </button>
+                </div>
+            </form>
+        </div>
+        ';
+
+
 
         // Muestra el contenido dentro del modal junto con el formulario
         echo '
@@ -85,7 +115,11 @@ class Duam_Template_Elements {
               <div class="modal-content">
                 <span class="close">&times;</span>
                 <h2>Inicia Sesión o Registrate para Continuar</h2>
-                ' .   $form  . '
+                <ul class="nav-tab">
+                    <li class="nav-link active">Inicia Sesión</li>
+                    <li class="nav-link">Registrate</li>
+                </ul>
+                <div class="nav-content">'.   $form_login  .  $form_register  . '</div>' . '
               </div>
             </div>
         ';

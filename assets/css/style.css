@@ -47,6 +47,36 @@
     height: auto;
   }
   
+  .nav-tab {
+    list-style-type: none;
+    padding: 0%;
+    margin: 0%;
+    display: flex;
+  }
+
+  .nav-link {
+    cursor: pointer;
+    padding: 1rem;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+  }
+
+  .nav-link.active {
+    background-color: #ccc;
+  }
+
+  .nav-content {
+    margin-top: 1rem;
+  }
+
+  .nav-content .content {
+    display: none;
+  }
+
+  .nav-content .content.active {
+    display: block;
+  }
+
   .close {
     color: #aaa;
     float: right;

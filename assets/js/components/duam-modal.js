@@ -15,4 +15,15 @@ jQuery(document).ready(function($) {
       $("#myModal").css("display", "none");
     }
   });
+
+  // Cambia de pestaña al hacer clic en un botón
+  $(".nav-link").click(function() {
+    var activeForm = $(this).index();
+    
+    $(".nav-link").removeClass("active");
+    $(this).addClass("active");
+
+    $(".nav-content .content").removeClass("active");
+    $(".nav-content .content").eq(activeForm).addClass("active");
+  })
 });
