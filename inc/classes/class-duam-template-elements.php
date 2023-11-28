@@ -55,23 +55,23 @@ class Duam_Template_Elements {
      */
     public function duam_modal_form() {
         $form_login = '
-        <div class="content">
+        <div class="content active">
             <form method="post" id="duam-login" class="duam-modal-form">
                 <div>
-                    <label for="username">' . esc_html( 'Nombre de usuario o correo', 'woocommerce' ) .  '&nbsp;<span class="required">*</span></label>   
+                    <label for="username">' . esc_html__( 'Username or email address', 'woocommerce' ) .  '&nbsp;<span class="required">*</span></label>   
                     <input type="text" name="username" id="username" autocomplete="nombre de usuario" value"" />
                 </div> 
                 <div>
-                    <label for="password">' . esc_html( 'Password', 'woocommerce' ) .  '&nbsp;<span class="required">*</span></label>   
+                    <label for="password">' . esc_html__( 'Password', 'woocommerce' ) .  '&nbsp;<span class="required">*</span></label>   
                     <input type="password" name="password" id="password" autocomplete="nombre de usuario" value"" />
                 </div> 
 
                 <div>
                     <label for="rememberme">
-                        <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span>' . esc_html( 'Remember me', 'woocommerce' ) . '</span>
+                        <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span>' . esc_html__( 'Remember me', 'woocommerce' ) . '</span>
                     </label>
                     ' . wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ) . '
-                    <button type="submit" class="button" name="duam-login" value="'. esc_attr( 'Log in', 'woocommerce' ) . '">' . esc_html( 'Log in', 'woocommerce' ) . '</button>
+                    <button type="submit" class="button" name="duam-login" value="'. esc_attr( 'Log in', 'woocommerce' ) . '">' . esc_html__( 'Log in', 'woocommerce' ) . '</button>
                 </div>
 
                 <div>
@@ -82,34 +82,43 @@ class Duam_Template_Elements {
         </div>
         ';
 
+        /**
+         * Register form
+         * TODO apply css ordering to better presentation
+         */
         $form_register = '
-        <div class="content active">
+        <div class="content">
             <form method="post" id="duam-register" class="duam-modal-form">
                 <div>
-                    <label for="reg_username">
-                        ' . esc_html( 'Username', 'woocommerce' ) . '&nbsp;<span class="required">*</span>
+                    <label for="reg_email">
+                        ' . esc_html__( 'Email address', 'woocommerce' ) . '&nbsp;<span class="required">*</span>
                     </label>
-                    <input type="text" name="username" id="reg_username" autocomplete="username" />
+                    <input type="email" name="email" id="reg_email" autocomplete="email" />
                 </div>
                 <div>
                     <label for="reg_password">
-                        ' . esc_html( 'Password', 'woocommerce' ) . '&nbsp; <span class="required">*</span>
+                        ' . esc_html__( 'Password', 'woocommerce' ) . '&nbsp; <span class="required">*</span>
                     </label>
                     <input type="password" name="password" id="reg_password" autocomplete="new-password" />
                 </div>
                 <div>
                     ' . wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ) . '
-                    <button class="button" type="submit" name="register" value="' . esc_attr( 'Register', 'woocommerce' ) . '">
-                        ' . esc_html( 'Register', 'woocommerce' ) . '
+                    <button class="button" type="submit" name="duam-register" value="' . esc_attr( 'Register', 'woocommerce' ) . '">
+                        ' . esc_html__( 'Register', 'woocommerce' ) . '
                     </button>
                 </div>
+                <div>'
+	                . wc_replace_policy_page_link_placeholders( wc_get_privacy_policy_text( 'registration' ) ) . 
+                '</div>
             </form>
         </div>
         ';
 
 
 
-        // Muestra el contenido dentro del modal junto con el formulario
+        /**
+         * Show login and register form within modals
+         */
         echo '
             <div id="myModal" class="modal">
               <div class="modal-content">

@@ -16,6 +16,7 @@ class DUAM_FEATURES {
         Duam_Commerce_Hooks::get_instance();
         Duam_Template_Elements::get_instance();
         Duam_Custom_Forms_Handler::get_instance();
+        Duam_User_Functions::get_instance(); // class used to generate users on WP
         // Duam_Admin_Menu::get_instance();
 	}
 }

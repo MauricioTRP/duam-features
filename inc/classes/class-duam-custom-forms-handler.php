@@ -103,28 +103,29 @@ class Duam_Custom_Forms_Handler {
     public static function duam_process_registration() {
 		$nonce_value = isset( $_POST['_wpnonce'] ) ? wp_unslash( $_POST['_wpnonce'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$nonce_value = isset( $_POST['woocommerce-register-nonce'] ) ? wp_unslash( $_POST['woocommerce-register-nonce'] ) : $nonce_value; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        
+
 		if ( isset( $_POST['duam-register'], $_POST['email'] ) && wp_verify_nonce( $nonce_value, 'woocommerce-register' ) ) {
-            $username = 'no' === get_option( 'woocommerce_registration_generate_username' ) && isset( $_POST['username'] ) ? wp_unslash( $_POST['username'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			$password = 'no' === get_option( 'woocommerce_registration_generate_password' ) && isset( $_POST['password'] ) ? $_POST['password'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+			
+			$username =  isset( $_POST['username'] ) ? wp_unslash( $_POST['username'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$password =  isset( $_POST['password'] ) ? $_POST['password'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			$email    = wp_unslash( $_POST['email'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            
+
 			try {
-                $validation_error  = new WP_Error();
+				$validation_error  = new WP_Error();
 				$validation_error  = apply_filters( 'woocommerce_process_registration_errors', $validation_error, $username, $password, $email );
 				$validation_errors = $validation_error->get_error_messages();
                 
 				if ( 1 === count( $validation_errors ) ) {
-                    throw new Exception( $validation_error->get_error_message() );
+					throw new Exception( $validation_error->get_error_message() );
 				} elseif ( $validation_errors ) {
-                    foreach ( $validation_errors as $message ) {
-                        wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $message, 'error' );
+					foreach ( $validation_errors as $message ) {
+						wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $message, 'error' );
 					}
 					throw new Exception();
 				}
-                
-				$new_customer = wc_create_new_customer( sanitize_email( $email ), wc_clean( $username ), $password );
-                
+                				
+				$new_customer = Duam_User_Functions::duam_create_new_customer( sanitize_email( $email ), wc_clean( $username ), $password );
+				
 				if ( is_wp_error( $new_customer ) ) {
                     throw new Exception( $new_customer->get_error_message() );
 				}
@@ -139,15 +140,11 @@ class Duam_Custom_Forms_Handler {
 				if ( apply_filters( 'woocommerce_registration_auth_new_customer', true, $new_customer ) ) {
                     wc_set_customer_auth_cookie( $new_customer );
                     
-					if ( ! empty( $_POST['redirect'] ) ) {
-                        $redirect = wp_sanitize_redirect( wp_unslash( $_POST['redirect'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-					} elseif ( wc_get_raw_referer() ) {
-                        $redirect = wc_get_raw_referer();
-					} else {
-                        $redirect = wc_get_page_permalink( 'checkout' );
-					}
+					$redirect = wc_get_checkout_url();
                     
-					wp_redirect( wp_validate_redirect( apply_filters( 'woocommerce_registration_redirect', $redirect ), wc_get_page_permalink( 'checkout' ) ) ); //phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+					wp_redirect( wp_validate_redirect( apply_filters( 'woocommerce_registration_redirect', $redirect ), wc_get_checkout_url() ) ); //phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+					wc_add_notice( 'Bienvenido/a ' . $new_customer->display_name . ', ahora puedes seguir con tu matrícula' , 'success' );
+					wc_add_notice( __( 'Your account was created successfully. Your login details have been sent to your email address.', 'woocommerce' ) );
 					exit;
 				}
 			} catch ( Exception $e ) {
