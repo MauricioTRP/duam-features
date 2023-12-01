@@ -38,7 +38,7 @@ class Duam_Template_Elements {
      */
     public function duam_sticky_button() {
         $image_url = DUAM_FEATURES_URI . '/assets/img/SENCE.png';
-        $outer_url = 'https://docs.google.com/spreadsheets/d/1AYYK2ByXs3YeajdI7BuE2-CF7btQTPhn/edit#gid=1690859871';
+        $outer_url = 'https://docs.google.com/spreadsheets/d/1LO43CkLXAlW2BvQgQTFPKaATZn_pTY7O/edit?usp=sharing&ouid=113616516354874432697&rtpof=true&sd=true';
         
         echo '
         <div class="duam-feature-btn">
