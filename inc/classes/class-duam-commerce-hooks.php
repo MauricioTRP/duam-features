@@ -19,7 +19,6 @@ class Duam_Commerce_Hooks {
         /**
          * Add actions
          */
-        // add_action( 'wp_footer', [ $this, 'listar_hooks_activos'] );
         add_action('woocommerce_order_status_changed', [ $this, 'change_order_state_if_coupon' ], 10, 2);
         // add_action( 'init', [ $this, 'custom_login_redirect' ] ); probando si la clase custom-forms-handlers hace el trabajo
     }
@@ -60,15 +59,6 @@ class Duam_Commerce_Hooks {
                     'user_password' => sanitize_text_field($_POST['password']),
                     'remember' => isset( $_POST[ 'rememberme' ] )
                 );
-
-                echo '<pre>';
-                echo '<h1> Existe WP_Error o Duam_WP_Error? </h1>';
-                echo '<h2> WP_Error </h2>';
-                print_r( class_exists( 'WP_Error' ) );
-                echo '<h2> Exception </h2>';
-                print_r( class_exists( 'Exception' ) );
-
-
 
                 if ( empty( $credentials[ 'user_login' ] ) ) {
                     throw new Exception( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong>' . __( 'Username is required.', 'woocommerce' ) );

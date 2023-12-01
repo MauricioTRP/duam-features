@@ -1,7 +1,8 @@
 jQuery(document).ready(function($) {
   // Abrir modal al hacer clic en el botón
-  $("#openModalBtn").click(function() {
+  $(".duam-open-modal-btn").click(function() {
     $("#myModal").css("display", "block");
+    console.log("Abre modal");
   });
 
   // Cerrar modal al hacer clic en el botón de cierre (x)

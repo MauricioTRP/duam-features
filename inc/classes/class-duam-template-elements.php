@@ -28,6 +28,7 @@ class Duam_Template_Elements {
         add_action( 'wp_footer', [ $this, 'duam_sticky_button' ] );
         add_action( 'wp_footer', [ $this, 'duam_modal_form' ] ); // form modal hidden on footer
         add_action( 'woocommerce_proceed_to_checkout', [ $this, 'duam_custom_proceed_to_checkout' ] , 20 ); // unhook custom proceed to checkout button and hook a custom one
+        // add_action( 'woocommerce_widget_shopping_cart_buttons', [ $this, 'duam_widget_shopping_cart_proceed_to_checkout'], 20 );
     }
 
     /**
@@ -140,7 +141,12 @@ class Duam_Template_Elements {
      * @return void
      */
     public function duam_modal_form_button_trigger() {
-        echo '<button id="openModalBtn" class="checkout-button button alt wc-forward' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '">Finalizar Matrícula</button>';
+        echo '<button id="openModalBtnCart" class="duam-open-modal-btn checkout-button button alt wc-forward' . esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ) . '">Finalizar Matrícula</button>';
+    }
+
+    public function duam_widget_proceed_trigger() {
+        $wp_button_class = wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '';
+        echo '<button id="openModalBtnWdCart" class="duam-open-modal-btn button checkout wc-forward' . esc_attr( $wp_button_class ) . '">Finalizar Matrícula</button>';
     }
 
     /**
@@ -158,8 +164,23 @@ class Duam_Template_Elements {
         }
     }
 
+    /**
+     * Output proceed to checkout widget button
+     * 
+     * not in use for JS problems (do not listen to click with JQuery)
+     */
+	function duam_widget_shopping_cart_proceed_to_checkout() {
+		$wp_button_class = wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '';
+        if ( is_user_logged_in() ) {
+            wc_get_template( 'cart/proceed-to-checkout-button.php' );
+        } else {
+            $this->duam_widget_proceed_trigger();
+        }
+	}
+
     public function duam_remove_default_checkout_button() {
         remove_action( 'woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20 );
+        remove_action( 'woocommerce_widget_shopping_cart_buttons', 'woocommerce_widget_shopping_cart_proceed_to_checkout', 20 );
     }
 
     /**
