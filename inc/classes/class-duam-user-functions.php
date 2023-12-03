@@ -32,13 +32,13 @@ class Duam_User_Functions {
         $username = sanitize_user( $username );
 
         if ( empty( $username ) || ! validate_username( $username ) ) {
-			return new WP_Error( 'registration-error-invalid-username', __( 'Please enter a valid account username.', 'woocommerce' ) );
+            return new WP_Error( 'registration-error-invalid-username', __( 'Please enter a valid account username.', 'woocommerce' ) );
 		}
-
+        
 		if ( username_exists( $username ) ) {
-			return new WP_Error( 'registration-error-username-exists', __( 'An account is already registered with that username. Please choose another.', 'woocommerce' ) );
+            return new WP_Error( 'registration-error-username-exists', __( 'An account is already registered with that username. Please choose another.', 'woocommerce' ) );
 		}
-
+        
 		// Handle password creation.
 		$password_generated = false;
 		if ( 'yes' === get_option( 'woocommerce_registration_generate_password' ) && empty( $password ) ) {
@@ -52,13 +52,13 @@ class Duam_User_Functions {
 
 		// Use WP_Error to handle registration errors.
 		$errors = new WP_Error();
-
+    
 		do_action( 'woocommerce_register_post', $username, $email, $errors );
 
 		$errors = apply_filters( 'woocommerce_registration_errors', $errors, $username, $email );
 
 		if ( $errors->get_error_code() ) {
-			return $errors;
+            return $errors;
 		}
 
 		$new_customer_data = apply_filters(
@@ -76,9 +76,9 @@ class Duam_User_Functions {
 
 		$customer_id = wp_insert_user( $new_customer_data );
 
-		if ( is_wp_error( $customer_id ) ) {
-			return $customer_id;
-		}
+        if ( is_wp_error( $customer_id ) ) {
+            return $customer_id;
+        }
 
 		do_action( 'woocommerce_created_customer', $customer_id, $new_customer_data, $password_generated );
 

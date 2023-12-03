@@ -123,7 +123,7 @@ class Duam_Custom_Forms_Handler {
 					}
 					throw new Exception();
 				}
-                				
+
 				$new_customer = Duam_User_Functions::duam_create_new_customer( sanitize_email( $email ), wc_clean( $username ), $password );
 				
 				if ( is_wp_error( $new_customer ) ) {
