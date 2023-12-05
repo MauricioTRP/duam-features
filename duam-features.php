@@ -12,6 +12,10 @@
  */
 
 // Defines root directory for plugin
+if ( ! defined( 'ABSPATH' )) {
+    die(); // die if accesed directly
+}
+
 if ( ! defined( 'DUAM_FEATURES_DIR_PATH' ) ) {
     define( 'DUAM_FEATURES_DIR_PATH', plugin_dir_path( __FILE__ ) );
 };
