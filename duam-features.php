@@ -3,11 +3,13 @@
  * This is the plugin bootstrap file
  * 
  * Plugin Name:     Duam Features
- * Plugin URI:  
- * Descriptions:    Adds custom Gutenberg blocks and admin panel to WooCommerce for bulk coupons
- * Version:         1.0.0
+ * Plugin URI:      https://github.com/MauricioTRP/duam-features
+ * Description:     Plugin para modificar el comportamiento WooCommerce, integra con LMSACE para venta de cursos online
+ * Version:         1.0
  * Author:          Mauricio Fuentes
- * License:         GPL v2 or Later
+ * Author URI:      https://github.com/MauricioTRP
+ * License:         GNU General Public License v3.0
+ * License URI:     http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:     duam-features-adds
  */
 
