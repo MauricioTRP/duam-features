@@ -20,7 +20,9 @@ class Duam_Commerce_Hooks {
          * Add actions
          */
         add_action('woocommerce_order_status_changed', [ $this, 'change_order_state_if_coupon' ], 10, 2);
-        // add_action( 'init', [ $this, 'custom_login_redirect' ] ); probando si la clase custom-forms-handlers hace el trabajo
+        add_filter( 'woocommerce_registration_auth_new_customer', '__return_true' ); // force login after registration
+        add_action( 'init', [ $this, 'duam_hide_coupon_on_cart' ] );
+        // add_filter( 'woocommerce_registration_redirect', [ $this, 'duam_customer_redirection' ], 10, 1 );
     }
 
     /**
@@ -40,55 +42,20 @@ class Duam_Commerce_Hooks {
         }
     }
 
-    public function custom_login_redirect() {
-       /**
-        * Sign in / Register
-        */
-        static $valid_nonce = null;
+    /**
+     * Hook to redirect after registration of user
+     */
+    function duam_customer_redirection( $redirection_url ) {
+        $redirection_url = wc_get_checkout_url();
 
-        if ( null === $valid_nonce ) {
-            $nonce_value = wc_get_var( $_REQUEST[ 'woocommerce-login-nonce' ] );
+        return $redirection_url;
+    }
 
-            $valid_nonce = wp_verify_nonce( $nonce_value, 'woocommerce-login' );
-        }
-
-        if ( isset( $_POST[ 'duam-login' ], $_POST[ 'username' ], $_POST[ 'password' ] ) && $valid_nonce ) {
-            try {
-                $credentials = array(
-                    'user_login' => sanitize_text_field($_POST['username']),
-                    'user_password' => sanitize_text_field($_POST['password']),
-                    'remember' => isset( $_POST[ 'rememberme' ] )
-                );
-
-                if ( empty( $credentials[ 'user_login' ] ) ) {
-                    throw new Exception( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong>' . __( 'Username is required.', 'woocommerce' ) );
-                }
-
-                // On multisite, ensure user exists on current site, if not add them before allowing login.
-				if ( is_multisite() ) {
-					$user_data = get_user_by( is_email( $creds['user_login'] ) ? 'email' : 'login', $creds['user_login'] );
-
-					if ( $user_data && ! is_user_member_of_blog( $user_data->ID, get_current_blog_id() ) ) {
-						add_user_to_blog( get_current_blog_id(), $user_data->ID, 'customer' );
-					}
-				}
-
-                // Perform the login
-                $user = wp_signon( $credentials );
-
-                if ( is_wp_error( $user ) ) {
-                    throw new Exception( $user->get_error_message() );
-                } else {
-                    // redirect to checkout
-                    if ( strpos( $_POST[ '_wp_http_referer' ], 'my-account' ) === false || strpos( $_POST[ '_wp_http_referer' ], 'mi-cuenta' === false ) ) {
-                        $checkout_url = wc_get_checkout_url();
-                        wp_safe_redirect( $checkout_url );
-                    }
-                }
-            } catch ( Exception $e ) {
-                wc_add_notice( apply_filters( 'login_errors', $e->getMessage() ), 'error' );
-                do_action( 'woocommerce_login_failed' );
-            }
-        }
+    /**
+     * Wants to hide coupon on cart
+     */
+    public function duam_hide_coupon_on_cart() {
+        // remueve el formulario cupon sólo en proceed_to_checkout
+        // remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
     }
 }

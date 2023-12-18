@@ -28,6 +28,7 @@ class Duam_Template_Elements {
         add_action( 'wp_footer', [ $this, 'duam_sticky_button' ] );
         add_action( 'wp_footer', [ $this, 'duam_modal_form' ] ); // form modal hidden on footer
         add_action( 'woocommerce_proceed_to_checkout', [ $this, 'duam_custom_proceed_to_checkout' ] , 20 ); // unhook custom proceed to checkout button and hook a custom one
+        add_action( 'woocommerce_before_cart', [ $this, 'duam_prompt_refresh' ] );
         // add_action( 'woocommerce_widget_shopping_cart_buttons', [ $this, 'duam_widget_shopping_cart_proceed_to_checkout'], 20 );
     }
 
@@ -47,6 +48,16 @@ class Duam_Template_Elements {
             </a>
         </div>
         ';
+    }
+
+    /**
+     * Mensaje al usuario
+     * Refrescar la página
+     */
+    public function duam_prompt_refresh() {
+        if ( is_cart() ){
+            wc_print_notice( 'Si tienes problemas para avanzar en la inscripción después de usa un cupón, prueba recargando la página', 'success' );
+        }
     }
 
     /**
@@ -89,7 +100,7 @@ class Duam_Template_Elements {
          */
         $form_register = '
         <div class="content">
-            <form method="post" id="duam-register" class="duam-modal-form">
+            <form method="post" id="duam-register register" class="duam-modal-form">
                 <div>
                     <label for="reg_email">
                         ' . esc_html__( 'Email address', 'woocommerce' ) . '&nbsp;<span class="required">*</span>
@@ -102,6 +113,7 @@ class Duam_Template_Elements {
                     </label>
                     <input type="password" name="password" id="reg_password" autocomplete="new-password" />
                 </div>
+                <br>
                 <div>
                     ' . wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ) . '
                     <button class="button" type="submit" name="duam-register" value="' . esc_attr( 'Register', 'woocommerce' ) . '">
@@ -124,7 +136,9 @@ class Duam_Template_Elements {
             <div id="myModal" class="modal">
               <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>Inicia Sesión o Registrate para Continuar</h2>
+                <h2>Debes iniciar sesión o registrarte</h2>
+                <p>Para que puedas usar la matrícula automática al curso, es necesario que hayas iniciado sesión
+                    antes de realizar el pago</p>
                 <ul class="nav-tab">
                     <li class="nav-link active">Inicia Sesión</li>
                     <li class="nav-link">Registrate</li>
